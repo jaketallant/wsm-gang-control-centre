@@ -18,8 +18,11 @@ def import_existing_database():
     DATA.mkdir(parents=True, exist_ok=True)
     if not IMPORT.exists():
         if not LIVE.exists():
-            print('INFO: No imported WSM database found. A fresh database will be created. '
-                  'If you have previous records, STOP and upload wsm.import.sqlite3 first.',flush=True)
+            raise RuntimeError(
+                'SAFETY STOP: The old WSM database has not been imported. '
+                'Upload the backed-up wsm.import.sqlite3 into /app/data before enabling the bot. '
+                'No empty replacement database will be created.'
+            )
         return
     if LIVE.exists():
         raise RuntimeError('SAFETY STOP: Found both wsm.sqlite3 and wsm.import.sqlite3. '
